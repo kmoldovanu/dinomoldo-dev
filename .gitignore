@@ -1,0 +1,97 @@
+# ============================================================
+# Environment variables / secrets
+# ============================================================
+
+.env
+.env.*
+!.env.example
+
+
+# ============================================================
+# Python / Django
+# ============================================================
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Django
+*.log
+db.sqlite3
+db.sqlite3-journal
+
+# Static/media generated files
+staticfiles/
+media/
+
+# Django local settings
+local_settings.py
+
+
+# ============================================================
+# Node / React / Vite
+# ============================================================
+
+node_modules/
+
+# Vite build
+dist/
+dist-ssr/
+
+# Vite cache
+.vite/
+
+# npm logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Optional npm cache
+.npm/
+
+
+# ============================================================
+# IDE / Editors
+# ============================================================
+
+.vscode/
+.idea/
+
+# VS Code local history
+.history/
+
+
+# ============================================================
+# OS files
+# ============================================================
+
+.DS_Store
+Thumbs.db
+
+
+# ============================================================
+# Coverage / testing
+# ============================================================
+
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+
+
+# ============================================================
+# Temporary files
+# ============================================================
+
+*.tmp
+*.temp
+*.swp
+*.swo
