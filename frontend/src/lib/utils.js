@@ -7,6 +7,19 @@ export function cn(...inputs) {
 }
 
 /**
+ * Base URL del backend Django.
+ *
+ * - In sviluppo (npm run dev): VITE_API_URL non è impostata, quindi BASE_URL
+ *   è "" e le chiamate a "/api/..." vengono intercettate dal proxy Vite
+ *   che le gira a http://localhost:8000.
+ *
+ * - In produzione (Vercel): VITE_API_URL è impostata come variabile d'ambiente
+ *   Vite (es. https://dinomoldo-backend.up.railway.app) e le chiamate vanno
+ *   direttamente al backend Railway.
+ */
+const BASE_URL = import.meta.env.VITE_API_URL ?? "";
+
+/**
  * Legge un cookie per nome. Serve per estrarre il cookie "csrftoken"
  * che Django imposta automaticamente nel browser.
  */
@@ -20,27 +33,33 @@ export function getCookie(name) {
 /**
  * Wrapper fetch per chiamate POST verso il backend Django con protezione CSRF.
  *
- * Come funziona il CSRF con Django + React (SPA separata):
- * 1. Django, quando servi una pagina (o un endpoint dedicato) che usa {% csrf_token %}
- *    o il middleware CsrfViewMiddleware, imposta un cookie "csrftoken" nel browser.
- * 2. Per ogni richiesta POST/PUT/DELETE, Django si aspetta l'header "X-CSRFToken"
- *    con lo stesso valore del cookie: se manca o non corrisponde, risponde 403.
- * 3. Qui leggiamo il cookie con getCookie("csrftoken") e lo inoltriamo nell'header.
- *
- * Nota: il browser deve poter leggere il cookie, quindi frontend e backend
- * devono girare sullo stesso dominio (o in dev, passare da CORS_ALLOW_CREDENTIALS
- * + credentials: "include", come impostato qui sotto).
+ * Funzionamento:
+ * 1. Prima di ogni POST chiama /api/csrf/ sul backend per ottenere il cookie
+ *    csrftoken (necessario quando frontend e backend sono su domini diversi,
+ *    perché il browser non ha ancora visitato il backend).
+ * 2. Legge il cookie e lo inoltra nell'header X-CSRFToken.
+ * 3. credentials: "include" fa viaggiare i cookie con la richiesta.
  */
 export async function postJSON(url, data) {
+  // Assicura che Django abbia impostato il cookie csrftoken prima di ogni POST.
+  // In sviluppo la chiamata va al proxy Vite → localhost:8000/api/csrf/
+  // In produzione va a BASE_URL/api/csrf/
+  await fetch(`${BASE_URL}/api/csrf/`, {
+    credentials: "include",
+  }).catch(() => {
+    // Ignora errori di rete sul preflight CSRF: se il cookie è già presente
+    // la POST funzionerà comunque.
+  });
+
   const csrfToken = getCookie("csrftoken");
 
-  const response = await fetch(url, {
+  const response = await fetch(`${BASE_URL}${url}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "X-CSRFToken": csrfToken || "",
     },
-    credentials: "include", // include i cookie nella richiesta (necessario per il CSRF)
+    credentials: "include",
     body: JSON.stringify(data),
   });
 

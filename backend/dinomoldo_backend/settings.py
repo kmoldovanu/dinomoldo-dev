@@ -2,8 +2,7 @@
 Impostazioni Django per il backend di dinomoldo.dev.
 
 Progetto minimale: espone un endpoint /api/contact/ che riceve le richieste
-dal form di contatto del sito. Da estendere quando servirà (es. autenticazione,
-invio email, altri endpoint).
+dal form di contatto del sito.
 """
 import os
 from pathlib import Path
@@ -13,14 +12,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv(BASE_DIR / ".env")
 
-# SECURITY WARNING: in produzione genera una nuova SECRET_KEY e mettila
-# in una variabile d'ambiente, non lasciarla hardcoded nel codice.
 SECRET_KEY = os.getenv("SECRET_KEY")
 
-# SECURITY WARNING: metti DEBUG = False in produzione.
 DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+# ALLOWED_HOSTS: in produzione Railway imposta la variabile RAILWAY_PUBLIC_DOMAIN
+# oppure si può impostare manualmente ALLOWED_HOSTS come stringa separata da virgola.
+_allowed = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1")
+ALLOWED_HOSTS = [h.strip() for h in _allowed.split(",") if h.strip()]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -36,6 +35,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    # whitenoise: serve i file statici direttamente da Gunicorn (no Nginx necessario)
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "corsheaders.middleware.CorsMiddleware",  # deve stare prima di CommonMiddleware
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -84,29 +85,55 @@ TIME_ZONE = "Europe/Rome"
 USE_I18N = True
 USE_TZ = True
 
+# ---------------------------------------------------------------------------
+# Static files — whitenoise gestisce il serving in produzione
+# ---------------------------------------------------------------------------
 STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # ---------------------------------------------------------------------------
-# CORS e CSRF: il frontend React (Vite, porta 5173) gira su un'origine
-# diversa dal backend Django (porta 8000) in sviluppo. Questi settaggi
-# permettono al browser di inviare richieste cross-origin con i cookie
-# (necessari per il CSRF) inclusi.
+# CORS e CSRF
+#
+# In sviluppo: localhost:5173 (Vite dev server)
+# In produzione: il dominio Vercel del frontend, letto da FRONTEND_URL
+#   es. FRONTEND_URL=https://dinomoldo-dev.vercel.app
 # ---------------------------------------------------------------------------
-CORS_ALLOWED_ORIGINS = [
+_cors_origins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
 ]
+_frontend_url = os.getenv("FRONTEND_URL", "").strip()
+if _frontend_url:
+    _cors_origins.append(_frontend_url)
+
+CORS_ALLOWED_ORIGINS = _cors_origins
 CORS_ALLOW_CREDENTIALS = True
 
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-]
+CSRF_TRUSTED_ORIGINS = _cors_origins
 
-# In produzione, se frontend e backend condividono lo stesso dominio
-# (es. dinomoldo.dev serve sia il sito che /api/), questi settaggi CORS
-# diventano superflui: bastano i cookie di sessione dello stesso dominio.
+# In produzione con domini separati il cookie CSRF deve poter viaggiare
+# cross-site: SameSite=None richiede Secure (HTTPS).
+if not DEBUG:
+    CSRF_COOKIE_SAMESITE = "None"
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SAMESITE = "None"
+    SESSION_COOKIE_SECURE = True
+
+# ---------------------------------------------------------------------------
+# Sicurezza HTTP (attiva solo in produzione)
+# ---------------------------------------------------------------------------
+if not DEBUG:
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_SECONDS = 60
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
@@ -114,15 +141,14 @@ REST_FRAMEWORK = {
     ],
 }
 
-
+# ---------------------------------------------------------------------------
+# Email
+# ---------------------------------------------------------------------------
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-
-EMAIL_HOST = os.getenv("EMAIL_HOST")
+EMAIL_HOST = os.getenv("EMAIL_HOST", "")
 EMAIL_PORT = int(os.getenv("EMAIL_PORT", "587"))
 EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "True").lower() == "true"
-
-EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
-
-DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
-CONTACT_NOTIFICATION_EMAIL = os.getenv("CONTACT_NOTIFICATION_EMAIL")
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "")
+CONTACT_NOTIFICATION_EMAIL = os.getenv("CONTACT_NOTIFICATION_EMAIL", "")
