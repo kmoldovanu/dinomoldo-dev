@@ -8,25 +8,25 @@
   automaticamente a tutto il sito tramite tailwind.config.js.
 */
 :root {
-  --background: 220 49% 8%;        /* #0B1220 - navy quasi nero */
-  --elevated: 220 40% 11%;         /* leggermente più chiaro, per card e sezioni alternate */
-  --elevated-2: 220 35% 14%;       /* secondo livello, per hover card */
-  --foreground: 214 32% 91%;       /* testo principale, bianco sporco */
-  --muted-foreground: 215 20% 65%; /* testo secondario grigio-azzurrino */
-  --border: 217 33% 20%;
-  --border-subtle: 217 33% 16%;    /* bordo più sottile per divisori */
+  --background: 222 47% 7%;        /* deep navy */
+  --elevated: 222 40% 10%;
+  --elevated-2: 220 35% 14%;
+  --foreground: 214 32% 93%;
+  --muted-foreground: 215 20% 62%;
+  --border: 217 33% 18%;
+  --border-subtle: 217 33% 14%;
 
-  --primary: 215 56% 41%;          /* #2E5FA3 - blu elettrico */
-  --primary-hover: 219 62% 53%;    /* #3B6FD1 */
+  --primary: 215 56% 41%;
+  --primary-hover: 219 62% 53%;
   --primary-foreground: 210 40% 98%;
 
-  --accent: 173 61% 47%;           /* #2FBFAF - turchese */
-  --accent-hover: 173 65% 54%;     /* #3ED6C4 */
-  --accent-foreground: 220 49% 8%;
+  --accent: 173 61% 47%;
+  --accent-hover: 173 65% 54%;
+  --accent-foreground: 222 47% 7%;
 
-  /* Glow per effetti hover */
-  --glow-primary: 0 0 20px hsl(215 56% 41% / 0.25);
-  --glow-accent: 0 0 20px hsl(173 61% 47% / 0.25);
+  --glow-primary: 0 0 30px hsl(215 56% 41% / 0.3);
+  --glow-accent: 0 0 30px hsl(173 61% 47% / 0.3);
+  --glow-accent-lg: 0 0 60px hsl(173 61% 47% / 0.15);
 }
 
 * {
@@ -95,8 +95,23 @@ code, .font-mono {
 
   .bg-gradient-hero {
     background:
-      radial-gradient(ellipse 80% 50% at 50% -10%, hsl(215 56% 41% / 0.12) 0%, transparent 70%),
-      radial-gradient(ellipse 60% 40% at 80% 60%, hsl(173 61% 47% / 0.06) 0%, transparent 60%);
+      radial-gradient(ellipse 100% 60% at 50% -5%, hsl(215 56% 41% / 0.18) 0%, transparent 65%),
+      radial-gradient(ellipse 70% 50% at 85% 70%, hsl(173 61% 47% / 0.08) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 40% at 10% 80%, hsl(215 56% 41% / 0.06) 0%, transparent 50%);
+  }
+
+  /* Subtle grid lines overlay for hero */
+  .bg-grid-lines {
+    background-image:
+      linear-gradient(hsl(var(--border) / 0.4) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--border) / 0.4) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* Dot pattern */
+  .bg-dots {
+    background-image: radial-gradient(hsl(var(--border)) 1px, transparent 1px);
+    background-size: 24px 24px;
   }
 
   .glow-primary {
@@ -105,6 +120,17 @@ code, .font-mono {
 
   .glow-accent {
     box-shadow: var(--glow-accent);
+  }
+
+  .glow-accent-lg {
+    box-shadow: var(--glow-accent-lg);
+  }
+
+  /* Card glass effect */
+  .glass-card {
+    background: hsl(var(--elevated) / 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
 }
 

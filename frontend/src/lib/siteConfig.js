@@ -1,17 +1,15 @@
 /**
  * siteConfig.js
  * ---------------------------------------------------------------
- * Unico punto in cui modificare testi, dati di contatto, servizi,
- * step del processo e contenuti mostrati nel sito.
- * I componenti in components/sections leggono da qui: per cambiare
- * un testo NON serve toccare la logica dei componenti.
+ * Configurazione centralizzata dei contenuti, parametri aziendali,
+ * canali di contatto e testi di presentazione.
  * ---------------------------------------------------------------
  */
 
 export const siteConfig = {
   brand: {
     name: "dinomoldo.dev",
-    tagline: "Software & Web Development",
+    tagline: "Software & Web Engineering",
     developerName: "Dino Moldo",
   },
 
@@ -19,133 +17,134 @@ export const siteConfig = {
     { label: "Profilo", href: "#chi-sono" },
     { label: "Servizi", href: "#servizi" },
     { label: "Processo", href: "#come-funziona" },
-    { label: "Garanzie", href: "#perche-fidarti" },
+    { label: "Standard", href: "#perche-fidarti" },
     { label: "Contatti", href: "#contatti" },
   ],
 
   hero: {
-    headline: "Soluzioni web professionali per attività locali.",
+    headline: "Soluzioni web ad alte prestazioni per attività locali.",
     subheadline:
-      "Realizzazione di siti vetrina performanti, ottimizzati per i motori di ricerca e progettati su misura — per ristoranti, negozi e attività commerciali che richiedono una presenza digitale efficace.",
-    ctaPrimary: { label: "Richiedi un preventivo", href: "#contatti" },
+      "Sviluppo di piattaforme web e siti vetrina progettati su misura, con codice proprietario, tempi di caricamento istantanei e struttura ottimizzata per trasformare le visite in opportunità di business.",
+    ctaPrimary: { label: "Richiedi una consulenza", href: "#contatti" },
     ctaSecondary: { label: "Esplora i servizi", href: "#servizi" },
   },
 
   about: {
-    title: "Profilo professionale",
+    title: "Profilo e Metodologia",
     paragraphs: [
-      "Sviluppatore software specializzato in applicazioni web. Utilizzo React e Django per realizzare siti strutturati, ad alto rendimento e di semplice gestione — senza dipendenze da plugin superflui o CMS difficili da mantenere.",
-      "Seguo ogni progetto in prima persona, dall'analisi dei requisiti alla consegna e oltre. Il cliente ha un unico interlocutore tecnico per tutta la durata del progetto, garantendo comunicazione diretta e tempi di risposta ridotti.",
+      "Ingegnere del software specializzato nello sviluppo di applicazioni e piattaforme web moderne. Realizzo infrastrutture digitali basate su React e Django che garantiscono elevata velocità di esecuzione, rigore architetturale e facilità di gestione nel tempo, eliminando la dipendenza da CMS fragili o plugin ridondanti.",
+      "Ogni progetto è gestito con un approccio consulenziale diretto: dall'analisi preliminare dei requisiti fino al deployment in produzione e al supporto continuativo. Un unico referente tecnico assicura trasparenza decisionale, tempestività di risposta e piena aderenza agli obiettivi di business.",
     ],
   },
 
   services: {
-    title: "Servizi",
-    subtitle: "Soluzioni mirate per portare la tua attività online in modo professionale ed efficace.",
+    title: "Servizi e Soluzioni",
+    subtitle: "Soluzioni digitali mirate per consolidare la presenza sul mercato e massimizzare i risultati operativi.",
     items: [
       {
         icon: "LayoutTemplate",
-        title: "Sito vetrina one-page",
+        title: "Sito vetrina ad alte prestazioni",
         description:
-          "Pagina singola strutturata e performante: presentazione dell'attività, offerta di servizi, localizzazione e canali di contatto. Indicato per studi professionali, negozi e attività di servizi.",
+          "Architettura monopagina ottimizzata per la conversione: valorizzazione del brand, catalogo servizi, localizzazione strategica e canali di contatto immediati. Ideale per studi professionali e imprese locali.",
       },
       {
         icon: "UtensilsCrossed",
-        title: "Sito per ristoranti con menu",
+        title: "Piattaforma food con menu interattivo",
         description:
-          "Menu digitale aggiornabile in autonomia, con sezioni dedicate a orari, prenotazioni e contatti diretti. Sviluppato specificamente per il settore della ristorazione.",
+          "Infrastruttura per la ristorazione con menu digitale dinamico aggiornabile in autonomia, moduli per la prenotazione rapida e consultazione ottimizzata per qualsiasi dispositivo mobile.",
       },
       {
         icon: "Wrench",
-        title: "Manutenzione e aggiornamenti",
+        title: "Manutenzione evolutiva e supporto tecnico",
         description:
-          "Aggiornamento di contenuti, sostituzione di immagini, interventi tecnici puntuali. Un riferimento stabile per la gestione continuativa del sito, senza necessità di rifacimenti.",
+          "Monitoraggio continuativo delle performance, aggiornamenti di sicurezza, refactoring e integrazione di nuove funzionalità per garantire stabilità e continuità operativa.",
       },
     ],
   },
 
   process: {
-    title: "Processo di lavoro",
-    subtitle: "Quattro fasi strutturate, dalla raccolta dei requisiti alla pubblicazione.",
+    title: "Metodologia operativa",
+    subtitle: "Un percorso strutturato in quattro fasi cardine per garantire puntualità, trasparenza e qualità ingegneristica.",
     steps: [
       {
         step: "01",
-        title: "Briefing",
-        description: "Raccolta delle esigenze e del contesto aziendale. Eventuale call conoscitiva per definire gli obiettivi del progetto.",
+        title: "Analisi e Requisiti",
+        description: "Studio approfondito degli obiettivi aziendali, analisi del settore e formalizzazione delle specifiche tecniche e funzionali.",
       },
       {
         step: "02",
-        title: "Sviluppo",
-        description: "Realizzazione di una prima versione del sito basata sui requisiti raccolti, con struttura e contenuti definiti nella fase di briefing.",
+        title: "Progettazione e Sviluppo",
+        description: "Sviluppo della piattaforma con tecnologie allo stato dell'arte, curando architettura software, accessibilità e reattività multi-dispositivo.",
       },
       {
         step: "03",
-        title: "Revisione",
-        description: "Revisione condivisa del progetto e affinamento di testi, immagini e dettagli tecnici fino al raggiungimento delle specifiche concordate.",
+        title: "Collaudo e Ottimizzazione",
+        description: "Sessione di verifica congiunta, test prestazionali e ottimizzazione fine dei parametri Core Web Vitals e SEO prima del rilascio.",
       },
       {
         step: "04",
-        title: "Consegna",
-        description: "Pubblicazione del sito. Disponibilità garantita per interventi di manutenzione e assistenza post-consegna.",
+        title: "Messa in produzione",
+        description: "Rilascio dell'applicativo con configurazione domini, crittografia SSL e fornitura di assistenza tecnica post-avvio.",
       },
     ],
   },
 
   trust: {
-    title: "Trasparenza e affidabilità",
+    title: "Standard qualitativi e garanzie",
     intro:
-      "Attività freelance in fase di avvio: non sono disponibili ancora casi studio consolidati. Questa informazione viene comunicata in modo esplicito, perché la trasparenza è parte integrante del servizio. In compenso, ogni progetto riceve attenzione diretta e condizioni economiche vantaggiose rispetto ad agenzie strutturate.",
+      "Ogni progetto è sviluppato nel rigoroso rispetto dei più elevati standard dell'ingegneria del software. L'adozione di tecnologie enterprise e una linea di comunicazione tecnica senza intermediari assicurano affidabilità, trasparenza contrattuale e risultati misurabili.",
     stack: {
       title: "Stack tecnologico",
       items: ["React", "Django", "Tailwind CSS", "Python", "PostgreSQL"],
     },
     commitments: [
       {
-        title: "Preventivo fisso concordato preventivamente",
-        description: "Il costo totale viene definito prima dell'avvio dei lavori. Nessuna variazione di prezzo a progetto concluso.",
+        title: "Preventivo a costo fisso vincolante",
+        description: "Definizione chiara e dettagliata dell'investimento prima dell'avvio dei lavori. Nessun costo nascosto o revisione al rilascio.",
       },
       {
-        title: "Interlocutore tecnico unico",
-        description: "Nessun intermediario. Le richieste vengono gestite direttamente dallo sviluppatore responsabile del progetto.",
+        title: "Interlocutore tecnico dedicato",
+        description: "Collaborazione diretta con lo sviluppatore responsabile del codice, eliminando filtri di agenzia e dispersioni comunicative.",
       },
       {
-        title: "Scadenze definite e rispettate",
-        description: "I tempi di consegna vengono concordati nella fase iniziale e rispettati per l'intera durata del progetto.",
+        title: "Tempistiche di rilascio certe",
+        description: "Pianificazione dettagliata delle milestone con scadenze concordate preventivamente e rigorosamente rispettate.",
       },
       {
-        title: "Tariffe agevolate sui primi progetti",
-        description: "I clienti iniziali beneficiano di condizioni economiche preferenziali, a parità di qualità tecnica e di servizio.",
+        title: "Codice proprietario e manutenibile",
+        description: "Pieno controllo e proprietà del codice sorgente, senza vincoli a piattaforme chiuse, garantendo scalabilità nel tempo.",
       },
     ],
   },
 
   contact: {
-    title: "Contatti",
-    subtitle: "Illustra la tua esigenza. Risposta garantita entro un giorno lavorativo.",
+    title: "Richiesta di contatto e consulenza",
+    subtitle: "Descrivi il tuo progetto o le esigenze aziendali: riceverai una risposta dettagliata entro 24 ore lavorative.",
     email: "moldovanu.business@gmail.com",
     social: [
       { label: "Instagram", href: "https://instagram.com/dinomoldo.dev" },
     ],
     businessTypes: [
-      { value: "ristorante", label: "Ristorante" },
-      { value: "negozio", label: "Negozio" },
-      { value: "altro", label: "Altro" },
+      { value: "ristorante", label: "Ristorazione & Food" },
+      { value: "negozio", label: "Attività commerciale / Retail" },
+      { value: "studio", label: "Studio professionale / Servizi" },
+      { value: "altro", label: "Altra tipologia d'impresa" },
     ],
     form: {
-      nameLabel: "Nome",
-      namePlaceholder: "Nome e cognome",
-      emailLabel: "Indirizzo email",
+      nameLabel: "Nome e Cognome / Referente",
+      namePlaceholder: "es. Mario Rossi",
+      emailLabel: "Indirizzo Email aziendale",
       emailPlaceholder: "nome@azienda.it",
-      phoneLabel: "Numero di telefono (facoltativo)",
+      phoneLabel: "Recapito telefonico (facoltativo)",
       phonePlaceholder: "+39 000 000 0000",
-      businessTypeLabel: "Tipo di attività",
-      businessTypePlaceholder: "Seleziona un'opzione",
-      messageLabel: "Messaggio",
-      messagePlaceholder: "Descrivi brevemente il progetto o la necessità...",
+      businessTypeLabel: "Tipologia di attività",
+      businessTypePlaceholder: "Seleziona la tipologia di attività",
+      messageLabel: "Dettagli del progetto",
+      messagePlaceholder: "Descrivi sinteticamente il progetto, le funzionalità richieste o gli obiettivi prefissati...",
       submitLabel: "Invia richiesta",
-      submitLoadingLabel: "Invio in corso...",
-      successMessage: "Richiesta ricevuta. Risposta entro un giorno lavorativo.",
-      errorMessage: "Invio non riuscito. Riprovare o contattare direttamente via email.",
+      submitLoadingLabel: "Trasmissione in corso...",
+      successMessage: "Richiesta ricevuta con successo. Sarai ricontattato entro 24 ore lavorative.",
+      errorMessage: "Si è verificato un errore durante la trasmissione. Riprovare o contattare direttamente l'indirizzo email indicato.",
     },
   },
 
