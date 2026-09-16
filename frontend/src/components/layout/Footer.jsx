@@ -4,27 +4,39 @@ import { siteConfig } from "@/lib/siteConfig";
 
 export function Footer() {
   return (
-    <footer className="border-t border-border">
-      <div className="container py-10 flex flex-col md:flex-row items-center justify-between gap-6">
-        <Logo className="h-7 w-auto opacity-80" />
+    <footer className="border-t border-border bg-elevated/20">
+      <div className="container py-10">
+        <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-8">
+          {/* Logo + tagline */}
+          <div className="flex flex-col items-center md:items-start gap-2">
+            <Logo className="h-8 w-auto opacity-85" />
+            <p className="text-xs text-muted font-mono">
+              {siteConfig.brand.tagline}
+            </p>
+          </div>
 
-        <div className="flex items-center gap-6">
-          {siteConfig.contact.social.map((social) => (
-            <a
-              key={social.label}
-              href={social.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-muted hover:text-accent transition-colors"
-            >
-              {social.label}
-            </a>
-          ))}
-        </div>
+          {/* Social links */}
+          <div className="flex items-center gap-5">
+            {siteConfig.contact.social.map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-muted hover:text-accent transition-colors"
+              >
+                {social.label}
+              </a>
+            ))}
+          </div>
 
-        <div className="text-sm text-muted text-center md:text-right">
-          <p>{siteConfig.footer.copyright}</p>
-          <p className="font-mono text-xs mt-1">{siteConfig.footer.madeBy}</p>
+          {/* Copyright */}
+          <div className="text-center md:text-right">
+            <p className="text-sm text-muted">{siteConfig.footer.copyright}</p>
+            <p className="font-mono text-xs text-muted/60 mt-1">
+              {siteConfig.footer.madeBy}
+            </p>
+          </div>
         </div>
       </div>
     </footer>
