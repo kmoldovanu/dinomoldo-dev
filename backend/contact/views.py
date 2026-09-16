@@ -39,6 +39,8 @@ def _send_notification(contact_request):
 
     resend.api_key = api_key
 
+    phone_line = f"Telefono: {contact_request.phone}\n" if contact_request.phone else ""
+
     resend.Emails.send({
         "from": "dinomoldo.dev <onboarding@resend.dev>",
         "to": [recipient],
@@ -47,7 +49,9 @@ def _send_notification(contact_request):
         "text": (
             "Hai ricevuto una nuova richiesta di contatto.\n\n"
             f"Nome: {contact_request.name}\n"
-            f"Email: {contact_request.email}\n\n"
+            f"Email: {contact_request.email}\n"
+            f"{phone_line}"
+            f"Tipo di attività: {contact_request.get_business_type_display()}\n\n"
             "Messaggio:\n"
             f"{contact_request.message}\n"
         ),

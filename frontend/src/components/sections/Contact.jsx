@@ -106,7 +106,7 @@ export function Contact() {
                   <p className="text-xs text-muted font-mono uppercase tracking-wide">
                     Email
                   </p>
-                  <p className="text-sm text-foreground group-hover:text-accent transition-colors">
+                  <p className="text-sm text-foreground group-hover:text-accent transition-colors break-all">
                     {contact.email}
                   </p>
                 </div>

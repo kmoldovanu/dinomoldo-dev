@@ -66,7 +66,7 @@ export function Hero() {
           </div>
 
           {/* Piccole stat/trust indicators */}
-          <div className="mt-10 flex items-center gap-6 text-sm text-muted">
+          <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted">
             <div className="flex items-center gap-1.5">
               <span className="text-accent font-semibold">✓</span>
               Prezzo fisso
