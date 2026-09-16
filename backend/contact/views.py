@@ -1,8 +1,8 @@
 import logging
+import os
 
+import resend
 from django.conf import settings
-from django.core.mail import EmailMessage
-from django.core.mail.backends.smtp import EmailBackend
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -14,52 +14,51 @@ logger = logging.getLogger(__name__)
 
 def _send_notification(contact_request):
     """
-    Invia la email di notifica con un timeout SMTP esplicito (10s).
-    Se la connessione non riesce entro 10 secondi, lancia eccezione
-    invece di bloccare il worker Gunicorn per 30+ secondi.
+    Invia la email di notifica tramite Resend API (HTTP, non SMTP).
+    Resend funziona su Railway free tier a differenza di Gmail SMTP
+    che viene bloccato sulla porta 587.
     """
+    api_key = os.getenv("RESEND_API_KEY", "").strip()
     recipient = getattr(settings, "CONTACT_NOTIFICATION_EMAIL", "").strip()
-    sender = getattr(settings, "DEFAULT_FROM_EMAIL", "").strip()
 
-    if not recipient or not sender:
+    if not api_key:
         logger.warning(
-            "Email non inviata: CONTACT_NOTIFICATION_EMAIL o DEFAULT_FROM_EMAIL "
-            "non configurati. Richiesta id=%s salvata nel DB.",
+            "Email non inviata: RESEND_API_KEY non configurata. "
+            "Richiesta id=%s salvata nel DB.",
             contact_request.pk,
         )
         return
 
-    backend = EmailBackend(
-        host=settings.EMAIL_HOST,
-        port=settings.EMAIL_PORT,
-        username=settings.EMAIL_HOST_USER,
-        password=settings.EMAIL_HOST_PASSWORD,
-        use_tls=settings.EMAIL_USE_TLS,
-        timeout=10,  # fallisce veloce invece di bloccare il worker
-    )
+    if not recipient:
+        logger.warning(
+            "Email non inviata: CONTACT_NOTIFICATION_EMAIL non configurata. "
+            "Richiesta id=%s salvata nel DB.",
+            contact_request.pk,
+        )
+        return
 
-    email = EmailMessage(
-        subject=f"Nuova richiesta di contatto da {contact_request.name}",
-        body=(
+    resend.api_key = api_key
+
+    resend.Emails.send({
+        "from": "dinomoldo.dev <onboarding@resend.dev>",
+        "to": [recipient],
+        "reply_to": contact_request.email,
+        "subject": f"Nuova richiesta di contatto da {contact_request.name}",
+        "text": (
             "Hai ricevuto una nuova richiesta di contatto.\n\n"
             f"Nome: {contact_request.name}\n"
             f"Email: {contact_request.email}\n\n"
             "Messaggio:\n"
             f"{contact_request.message}\n"
         ),
-        from_email=sender,
-        to=[recipient],
-        reply_to=[contact_request.email],
-        connection=backend,
-    )
-    email.send(fail_silently=False)
+    })
 
 
 class ContactRequestView(APIView):
     """
     POST /api/contact/
 
-    Valida, salva la richiesta e tenta l'invio email.
+    Valida, salva la richiesta e tenta l'invio email tramite Resend.
     Se l'email fallisce la richiesta è comunque salvata nel DB
     e si risponde 201 al client.
     """
