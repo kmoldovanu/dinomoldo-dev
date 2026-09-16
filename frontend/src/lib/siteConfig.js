@@ -16,112 +16,112 @@ export const siteConfig = {
   },
 
   nav: [
-    { label: "Chi sono", href: "#chi-sono" },
+    { label: "Profilo", href: "#chi-sono" },
     { label: "Servizi", href: "#servizi" },
-    { label: "Come funziona", href: "#come-funziona" },
-    { label: "Perché fidarti", href: "#perche-fidarti" },
+    { label: "Processo", href: "#come-funziona" },
+    { label: "Garanzie", href: "#perche-fidarti" },
     { label: "Contatti", href: "#contatti" },
   ],
 
   hero: {
-    headline: "Un sito web fatto bene, per la tua attività locale.",
+    headline: "Soluzioni web professionali per attività locali.",
     subheadline:
-      "Siti vetrina semplici, veloci e curati nei dettagli — pensati per ristoranti, negozi e piccole attività che vogliono farsi trovare online.",
+      "Realizzazione di siti vetrina performanti, ottimizzati per i motori di ricerca e progettati su misura — per ristoranti, negozi e attività commerciali che richiedono una presenza digitale efficace.",
     ctaPrimary: { label: "Richiedi un preventivo", href: "#contatti" },
-    ctaSecondary: { label: "Guarda i servizi", href: "#servizi" },
+    ctaSecondary: { label: "Esplora i servizi", href: "#servizi" },
   },
 
   about: {
-    title: "Chi sono",
+    title: "Profilo professionale",
     paragraphs: [
-      "Sono Dino, sviluppatore software e web. Lavoro con React e Django per costruire siti solidi, veloci da caricare e semplici da aggiornare — senza plugin superflui o builder pesanti da mantenere.",
-      "Seguo ogni progetto dall'inizio alla fine: capisco cosa serve alla tua attività, costruisco il sito e resto disponibile dopo la consegna. Nessun passaggio di mano tra reparti diversi, parli sempre con chi scrive il codice.",
+      "Sviluppatore software specializzato in applicazioni web. Utilizzo React e Django per realizzare siti strutturati, ad alto rendimento e di semplice gestione — senza dipendenze da plugin superflui o CMS difficili da mantenere.",
+      "Seguo ogni progetto in prima persona, dall'analisi dei requisiti alla consegna e oltre. Il cliente ha un unico interlocutore tecnico per tutta la durata del progetto, garantendo comunicazione diretta e tempi di risposta ridotti.",
     ],
   },
 
   services: {
     title: "Servizi",
-    subtitle: "Tre modi per portare la tua attività online, a seconda di cosa ti serve davvero.",
+    subtitle: "Soluzioni mirate per portare la tua attività online in modo professionale ed efficace.",
     items: [
       {
         icon: "LayoutTemplate",
         title: "Sito vetrina one-page",
         description:
-          "Una pagina unica, chiara e veloce: chi sei, cosa offri, dove trovarti e come contattarti. Ideale per negozi, studi e attività di servizi.",
+          "Pagina singola strutturata e performante: presentazione dell'attività, offerta di servizi, localizzazione e canali di contatto. Indicato per studi professionali, negozi e attività di servizi.",
       },
       {
         icon: "UtensilsCrossed",
         title: "Sito per ristoranti con menu",
         description:
-          "Menu digitale sempre aggiornabile, orari, posizione e prenotazioni o contatto diretto. Pensato per chi lavora nella ristorazione.",
+          "Menu digitale aggiornabile in autonomia, con sezioni dedicate a orari, prenotazioni e contatti diretti. Sviluppato specificamente per il settore della ristorazione.",
       },
       {
         icon: "Wrench",
         title: "Manutenzione e aggiornamenti",
         description:
-          "Modifiche ai testi, nuove foto, piccoli aggiustamenti o aggiornamenti tecnici. Un riferimento fisso per il tuo sito, senza doverlo rifare da capo ogni volta.",
+          "Aggiornamento di contenuti, sostituzione di immagini, interventi tecnici puntuali. Un riferimento stabile per la gestione continuativa del sito, senza necessità di rifacimenti.",
       },
     ],
   },
 
   process: {
-    title: "Come funziona",
-    subtitle: "Quattro passaggi semplici, dalla prima richiesta al sito online.",
+    title: "Processo di lavoro",
+    subtitle: "Quattro fasi strutturate, dalla raccolta dei requisiti alla pubblicazione.",
     steps: [
       {
         step: "01",
-        title: "Richiesta",
-        description: "Mi scrivi cosa ti serve e per che tipo di attività. Fissiamo una chiamata veloce se utile.",
+        title: "Briefing",
+        description: "Raccolta delle esigenze e del contesto aziendale. Eventuale call conoscitiva per definire gli obiettivi del progetto.",
       },
       {
         step: "02",
-        title: "Bozza",
-        description: "Preparo una prima versione del sito con testi e struttura, basata su quello che mi hai raccontato.",
+        title: "Sviluppo",
+        description: "Realizzazione di una prima versione del sito basata sui requisiti raccolti, con struttura e contenuti definiti nella fase di briefing.",
       },
       {
         step: "03",
         title: "Revisione",
-        description: "Guardiamo insieme la bozza e sistemo testi, immagini e dettagli finché non è quello che ti serve.",
+        description: "Revisione condivisa del progetto e affinamento di testi, immagini e dettagli tecnici fino al raggiungimento delle specifiche concordate.",
       },
       {
         step: "04",
         title: "Consegna",
-        description: "Il sito va online. Resto disponibile per modifiche e assistenza dopo la consegna.",
+        description: "Pubblicazione del sito. Disponibilità garantita per interventi di manutenzione e assistenza post-consegna.",
       },
     ],
   },
 
   trust: {
-    title: "Perché fidarti di me",
+    title: "Trasparenza e affidabilità",
     intro:
-      "Sto avviando la mia attività da sviluppatore freelance: non ho ancora casi studio da mostrare, e preferisco dirlo apertamente piuttosto che nasconderlo. In cambio offro qualcosa che con studi più grandi è raro: attenzione diretta e condizioni di lancio vantaggiose sui primi progetti.",
+      "Attività freelance in fase di avvio: non sono disponibili ancora casi studio consolidati. Questa informazione viene comunicata in modo esplicito, perché la trasparenza è parte integrante del servizio. In compenso, ogni progetto riceve attenzione diretta e condizioni economiche vantaggiose rispetto ad agenzie strutturate.",
     stack: {
-      title: "Come costruisco i siti",
+      title: "Stack tecnologico",
       items: ["React", "Django", "Tailwind CSS", "Python", "PostgreSQL"],
     },
     commitments: [
       {
-        title: "Prezzo fisso, concordato prima di iniziare",
-        description: "Sai esattamente quanto spendi, senza sorprese a lavoro finito.",
+        title: "Preventivo fisso concordato preventivamente",
+        description: "Il costo totale viene definito prima dell'avvio dei lavori. Nessuna variazione di prezzo a progetto concluso.",
       },
       {
-        title: "Parli con chi scrive il codice",
-        description: "Nessun intermediario: le tue richieste arrivano dritte a chi costruisce il sito.",
+        title: "Interlocutore tecnico unico",
+        description: "Nessun intermediario. Le richieste vengono gestite direttamente dallo sviluppatore responsabile del progetto.",
       },
       {
-        title: "Tempi di consegna chiari",
-        description: "Concordiamo una scadenza realistica all'inizio e la rispetto.",
+        title: "Scadenze definite e rispettate",
+        description: "I tempi di consegna vengono concordati nella fase iniziale e rispettati per l'intera durata del progetto.",
       },
       {
-        title: "Condizioni di lancio sui primi progetti",
-        description: "I primi clienti ricevono un prezzo agevolato e più attenzione, a parità di qualità.",
+        title: "Tariffe agevolate sui primi progetti",
+        description: "I clienti iniziali beneficiano di condizioni economiche preferenziali, a parità di qualità tecnica e di servizio.",
       },
     ],
   },
 
   contact: {
     title: "Contatti",
-    subtitle: "Raccontami della tua attività: ti rispondo entro un giorno lavorativo.",
+    subtitle: "Illustra la tua esigenza. Risposta garantita entro un giorno lavorativo.",
     email: "moldovanu.business@gmail.com",
     social: [
       { label: "Instagram", href: "https://instagram.com/dinomoldo.dev" },
@@ -133,19 +133,19 @@ export const siteConfig = {
     ],
     form: {
       nameLabel: "Nome",
-      namePlaceholder: "Il tuo nome",
-      emailLabel: "Email",
-      emailPlaceholder: "nome@esempio.it",
-      phoneLabel: "Telefono (facoltativo)",
+      namePlaceholder: "Nome e cognome",
+      emailLabel: "Indirizzo email",
+      emailPlaceholder: "nome@azienda.it",
+      phoneLabel: "Numero di telefono (facoltativo)",
       phonePlaceholder: "+39 000 000 0000",
       businessTypeLabel: "Tipo di attività",
       businessTypePlaceholder: "Seleziona un'opzione",
       messageLabel: "Messaggio",
-      messagePlaceholder: "Raccontami brevemente di cosa hai bisogno...",
+      messagePlaceholder: "Descrivi brevemente il progetto o la necessità...",
       submitLabel: "Invia richiesta",
       submitLoadingLabel: "Invio in corso...",
-      successMessage: "Richiesta inviata. Ti rispondo entro un giorno lavorativo.",
-      errorMessage: "Non sono riuscito a inviare la richiesta. Riprova o scrivimi direttamente via email.",
+      successMessage: "Richiesta ricevuta. Risposta entro un giorno lavorativo.",
+      errorMessage: "Invio non riuscito. Riprovare o contattare direttamente via email.",
     },
   },
 
