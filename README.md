@@ -8,8 +8,8 @@ Sito one-page per la mia attività freelance di sviluppo web: presentazione, ser
 
 ## Cosa c'è dentro
 
-- **Frontend e backend separati**: React su Vercel, Django su Railway.
-- **Form di contatto completo**: validazione con Django REST Framework, salvataggio nel database, gestione delle richieste dal pannello admin e notifica email tramite l'API di [Resend](https://resend.com). Se l'email non parte, la richiesta resta comunque salvata.
+- **Frontend e backend separati**: React e Django pubblicati come due progetti Vercel, database Postgres su Neon.
+- **Form di contatto completo**: validazione con Django REST Framework, salvataggio in Postgres, gestione delle richieste dal pannello admin e notifica email tramite l'API di [Resend](https://resend.com). Se l'email non parte, la richiesta resta comunque salvata.
 - **CORS e CSRF tra domini diversi**: il frontend legge il cookie `csrftoken` e lo rimanda nell'header `X-CSRFToken`.
 - **Contenuti in un solo file**: tutti i testi stanno in `frontend/src/lib/siteConfig.js`, i componenti non contengono copy.
 
@@ -18,8 +18,8 @@ Sito one-page per la mia attività freelance di sviluppo web: presentazione, ser
 | Parte | Tecnologie |
 |---|---|
 | Frontend | React 18, Vite, Tailwind CSS, shadcn/ui (Radix), lucide-react, Vercel Analytics |
-| Backend | Django 5, Django REST Framework, django-cors-headers, WhiteNoise, Gunicorn |
-| Servizi | Vercel (frontend), Railway (backend), Resend (email) |
+| Backend | Django 5, Django REST Framework, django-cors-headers, WhiteNoise, dj-database-url, psycopg |
+| Servizi | Vercel (frontend e backend serverless), Neon (Postgres), Resend (email) |
 
 ## Avvio in locale
 
@@ -49,10 +49,31 @@ In sviluppo Vite inoltra le chiamate a `/api` verso `http://localhost:8000` (ved
 
 | Variabile | A cosa serve |
 |---|---|
+| `SECRET_KEY` | chiave segreta di Django |
+| `DATABASE_URL` | Postgres (Neon); vuota in locale = SQLite |
+| `FRONTEND_URL` | URL del frontend, aggiunto alle origini CORS e CSRF |
 | `RESEND_API_KEY` | invio delle notifiche email; senza, le richieste vengono solo salvate |
 | `CONTACT_NOTIFICATION_EMAIL` | indirizzo che riceve le notifiche |
 
-Le altre impostazioni (chiave segreta, host consentiti, origini CORS e CSRF) sono in `backend/dinomoldo_backend/settings.py`.
+L'elenco completo è in `backend/.env.example`.
+
+## Deploy
+
+**Frontend**: progetto Vercel con *Root Directory* `frontend` e la variabile `VITE_API_URL` con l'URL del backend.
+
+**Backend**: secondo progetto Vercel con *Root Directory* `backend`. `backend/vercel.json` lo pubblica come funzione Python serverless (`dinomoldo_backend/wsgi.py`). Su Vercel:
+
+- il disco non è persistente, quindi serve `DATABASE_URL` (Neon);
+- i domini del progetto vengono aggiunti da soli ad `ALLOWED_HOSTS`;
+- i file statici del pannello admin li serve WhiteNoise direttamente dalle app, senza `collectstatic`.
+
+Le tabelle si creano una volta dal proprio computer, puntando al database di produzione:
+
+```bash
+cd backend
+DATABASE_URL="<url Neon>" python manage.py migrate
+DATABASE_URL="<url Neon>" python manage.py createsuperuser
+```
 
 ## Come funziona il CSRF con frontend e backend separati
 

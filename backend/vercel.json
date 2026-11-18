@@ -1,0 +1,4 @@
+{
+  "builds": [{ "src": "dinomoldo_backend/wsgi.py", "use": "@vercel/python" }],
+  "routes": [{ "src": "/(.*)", "dest": "dinomoldo_backend/wsgi.py" }]
+}

@@ -13,9 +13,9 @@ export function cn(...inputs) {
  *   è "" e le chiamate a "/api/..." vengono intercettate dal proxy Vite
  *   che le gira a http://localhost:8000.
  *
- * - In produzione (Vercel): VITE_API_URL è impostata come variabile d'ambiente
- *   Vite (es. https://dinomoldo-backend.up.railway.app) e le chiamate vanno
- *   direttamente al backend Railway.
+ * - In produzione: VITE_API_URL è impostata come variabile d'ambiente del progetto
+ *   Vercel del frontend (es. https://dinomoldo-dev-api.vercel.app) e le chiamate
+ *   vanno direttamente al backend Django, pubblicato come secondo progetto Vercel.
  */
 const BASE_URL = import.meta.env.VITE_API_URL ?? "";
 

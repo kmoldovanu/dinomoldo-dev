@@ -6,6 +6,8 @@ dal form di contatto del sito.
 """
 import os
 from pathlib import Path
+
+import dj_database_url
 from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -16,10 +18,16 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 
 DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 
-# ALLOWED_HOSTS: in produzione Railway imposta la variabile RAILWAY_PUBLIC_DOMAIN
-# oppure si può impostare manualmente ALLOWED_HOSTS come stringa separata da virgola.
+# Vercel imposta VERCEL=1 durante build ed esecuzione.
+ON_VERCEL = bool(os.getenv("VERCEL"))
+
+# ALLOWED_HOSTS: localhost più quelli in ALLOWED_HOSTS (separati da virgola).
+# Su Vercel si aggiungono da soli il dominio di produzione e quello del singolo deploy.
 _allowed = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1")
 ALLOWED_HOSTS = [h.strip() for h in _allowed.split(",") if h.strip()]
+for _var in ("VERCEL_PROJECT_PRODUCTION_URL", "VERCEL_URL", "VERCEL_BRANCH_URL"):
+    if os.getenv(_var):
+        ALLOWED_HOSTS.append(os.environ[_var])
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -66,11 +74,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "dinomoldo_backend.wsgi.application"
 
+# Database: Postgres (Neon) se c'è DATABASE_URL, altrimenti SQLite in locale.
+# Su Vercel il disco non è persistente, quindi in produzione DATABASE_URL è obbligatoria.
+# conn_max_age=0: ogni richiesta serverless apre e chiude la sua connessione.
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    "default": dj_database_url.config(
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+        conn_max_age=0,
+    )
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -91,10 +102,16 @@ USE_TZ = True
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STORAGES = {
+    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        # Su Vercel non gira collectstatic: niente manifest, e whitenoise legge i file
+        # (CSS e JS del pannello admin) direttamente dalle app installate.
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"
+        if ON_VERCEL
+        else "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
+WHITENOISE_USE_FINDERS = ON_VERCEL
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
