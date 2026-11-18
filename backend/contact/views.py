@@ -14,9 +14,8 @@ logger = logging.getLogger(__name__)
 
 def _send_notification(contact_request):
     """
-    Invia la email di notifica tramite Resend API (HTTP, non SMTP).
-    Resend funziona su Railway free tier a differenza di Gmail SMTP
-    che viene bloccato sulla porta 587.
+    Invia la email di notifica tramite Resend API (HTTP, non SMTP):
+    funziona anche su piattaforme serverless, dove le porte SMTP sono spesso bloccate.
     """
     api_key = os.getenv("RESEND_API_KEY", "").strip()
     recipient = getattr(settings, "CONTACT_NOTIFICATION_EMAIL", "").strip()
